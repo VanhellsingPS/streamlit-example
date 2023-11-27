@@ -61,8 +61,7 @@ if st.session_state.NoOfFollowups > 0:
             concatenated_prompt += f"Research Bot: {full_response}"
 
         st.session_state.messages.append({"role": "assistant", "content": full_response})
-    
-    st.session_state.NoOfFollowups = st.session_state.NoOfFollowups - 1
+        st.session_state.NoOfFollowups = st.session_state.NoOfFollowups - 1
 
     if st.session_state.NoOfFollowups == 0:
         with st.chat_message("assistant"):
