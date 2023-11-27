@@ -38,7 +38,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if st.session_state.NoOfFollowups > -1:
+if st.session_state.NoOfFollowups > 0:
     if prompt := st.chat_input("Enter Response"):
         with st.chat_message("user"):
             st.markdown(prompt)
