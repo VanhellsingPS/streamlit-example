@@ -25,10 +25,8 @@ Please generate the questions using the following guidelines:
 initial_question = "What are the primary messages you recall hearing during your discussion about Kyprolis for Multiple Myeloma?"
 Thankyou_message = "Thank you for answering the follow-up Questions"
 
-
 if "concatenated_prompt" not in st.session_state:
     st.session_state["concatenated_prompt"] = f"Research Bot: {initial_question}"
-
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -38,7 +36,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if st.session_state.NoOfFollowups > -1:
+if st.session_state.NoOfFollowups > 0:
     if prompt := st.chat_input("Enter Response"):
         with st.chat_message("user"):
             st.markdown(prompt)
@@ -49,9 +47,7 @@ if st.session_state.NoOfFollowups > -1:
             with st.chat_message("assistant"):
                 st.markdown(Thankyou_message)
                 st.session_state.messages.append({"role": "assistant", "content": Thankyou_message})
-                st.session_state.NoOfFollowups -= 5
-
-        if st.session_state.NoOfFollowups > 0:
+        else:
             with st.chat_message("assistant"):
                 message_placeholder = st.empty()
                 full_response = ""
@@ -69,4 +65,4 @@ if st.session_state.NoOfFollowups > -1:
                 message_placeholder.markdown(full_response)
                 st.session_state.concatenated_prompt += f"Research Bot: {full_response}"
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
-                st.session_state.NoOfFollowups -= 1  
+                st.session_state.NoOfFollowups -= 1
