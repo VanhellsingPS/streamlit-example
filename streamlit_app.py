@@ -44,13 +44,7 @@ if st.session_state.NoOfFollowups > -1:
             st.markdown(prompt)
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.concatenated_prompt += f"User: {prompt}"
-
-        if st.session_state.NoOfFollowups == 0:
-            with st.chat_message("assistant"):
-                st.markdown(Thankyou_message)
-                st.session_state.messages.append({"role": "assistant", "content": Thankyou_message})
-                st.session_state.NoOfFollowups -= 5
-                   
+                
         if st.session_state.NoOfFollowups > 0:
             with st.chat_message("assistant"):
                 message_placeholder = st.empty()
@@ -70,3 +64,9 @@ if st.session_state.NoOfFollowups > -1:
                 st.session_state.concatenated_prompt += f"Research Bot: {full_response}"
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
                 st.session_state.NoOfFollowups -= 1  
+
+    if st.session_state.NoOfFollowups == 0:
+        with st.chat_message("assistant"):
+            st.markdown(Thankyou_message)
+            st.session_state.messages.append({"role": "assistant", "content": Thankyou_message})
+            st.session_state.NoOfFollowups -= 5
