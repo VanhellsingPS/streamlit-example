@@ -18,14 +18,14 @@ Please generate the questions using the following guidelines:
 4. The question is about understanding what was discussed during an interaction between the HCP and a sales rep.
 5. If the answer is already in detail, thank the HCP and do not generate the next question.
 """
+NoOfTimes = 3
 
 initial_question = "What are the primary messages you recall hearing during your discussion about Kyprolis for Multiple Myeloma?"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
     st.session_state.messages.append({"role": "assistant", "content": initial_question})
-    NoOfTimes = 3
-
+    
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
