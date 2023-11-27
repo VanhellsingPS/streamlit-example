@@ -9,7 +9,7 @@ if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 system_prompt = """
-You are a market researcher [indicated as Research Bot] and the respondent is a Health Care Professional. Ask single follow-up question based on the prior question and answer flow provided below till there is sufficient clarity, detail and correlation to the first question.
+You are a market researcher [indicated as Research Bot] and the respondent is a Health Care Professional. Ask a single follow-up question based on the prior question and answer flow provided below until there is sufficient clarity, detail, and correlation to the first question.
 
 Please generate the questions using the following guidelines:
 1. Your question should be an open-ended question to understand greater detail for the response to the original question.
@@ -19,13 +19,12 @@ Please generate the questions using the following guidelines:
 5. If the answer is already in detail, thank the HCP and do not generate the next question.
 """
 
-
 initial_question = "What are the primary messages you recall hearing during your discussion about Kyprolis for Multiple Myeloma?"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
     st.session_state.messages.append({"role": "assistant", "content": initial_question})
-    NoOfTimes=3
+    NoOfTimes = 3
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -33,30 +32,29 @@ for message in st.session_state.messages:
 
 concatenated_prompt = f"Research Bot: {initial_question}"
 
-if NoOfTimes>0:
-  if prompt := st.chat_input("Enter Response"):
-    with st.chat_message("user"):
-        st.markdown(prompt)
-    st.session_state.messages.append({"role": "user", "content": prompt})
+if NoOfTimes > 0:
+    if prompt := st.chat_input("Enter Response"):
+        with st.chat_message("user"):
+            st.markdown(prompt)
+        st.session_state.messages.append({"role": "user", "content": prompt})
 
-    concatenated_prompt += f"User: {prompt}"
-    
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-        for response in client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": concatenated_prompt}
-            ],
-            stream=True,
-        ):
-            full_response += (response.choices[0].delta.content or "")
-            message_placeholder.markdown(full_response + "▌")
-            NoOfTimes -= 1
-        message_placeholder.markdown(full_response)
-        concatenated_prompt += f"Research Bot: {full_response}"
+        concatenated_prompt += f"User: {prompt}"
 
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-   
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            for response in client.chat.completions.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": concatenated_prompt}
+                ],
+                stream=True,
+            ):
+                full_response += (response.choices[0].delta.content or "")
+                message_placeholder.markdown(full_response + "▌")
+                NoOfTimes -= 1
+            message_placeholder.markdown(full_response)
+            concatenated_prompt += f"Research Bot: {full_response}"
+
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
