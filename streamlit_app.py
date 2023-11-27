@@ -49,7 +49,8 @@ if st.session_state.NoOfFollowups > -1:
             with st.chat_message("assistant"):
                 st.markdown(Thankyou_message)
                 st.session_state.messages.append({"role": "assistant", "content": Thankyou_message})
-
+                st.session_state.NoOfFollowups -= 1
+                   
         if st.session_state.NoOfFollowups > 0:
             with st.chat_message("assistant"):
                 message_placeholder = st.empty()
