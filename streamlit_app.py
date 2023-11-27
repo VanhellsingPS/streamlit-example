@@ -23,7 +23,7 @@ Please generate the questions using the following guidelines:
 """
 
 initial_question = "What are the primary messages you recall hearing during your discussion about Kyprolis for Multiple Myeloma?"
-Thankyou_message =""
+Thankyou_message ="Thank you for answering the follow-up Questions"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -61,7 +61,7 @@ if st.session_state.NoOfFollowups > 0:
             concatenated_prompt += f"Research Bot: {full_response}"
 
         st.session_state.messages.append({"role": "assistant", "content": full_response})
-        if st.session_state.NoOfFollowups == 1:
+        if st.session_state.NoOfFollowups == 0:
             with st.chat_message(message["assistant"]):
                 st.markdown(message[Thankyou_message])
                 st.session_state.messages.append({"role": "assistant", "content": Thankyou_message})
