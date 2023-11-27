@@ -9,7 +9,7 @@ if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 if "NoOfTimes" not in st.session_state:
-    st.session_state["NoOfTimes"] = 3
+    st.session_state["NoOfTimes"] = 1
 
 system_prompt = """
 You are a market researcher [indicated as Research Bot] and the respondent is a Health Care Professional. Ask a single follow-up question based on the prior question and answer flow provided below until there is sufficient clarity, detail, and correlation to the first question.
