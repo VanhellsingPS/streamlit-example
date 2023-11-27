@@ -56,13 +56,13 @@ if st.session_state.NoOfFollowups > 0:
             ):
                 full_response += (response.choices[0].delta.content or "")
                 message_placeholder.markdown(full_response + "▌")
-                st.session_state.NoOfFollowups -= 1
+            
             message_placeholder.markdown(full_response)
             concatenated_prompt += f"Research Bot: {full_response}"
-
         st.session_state.messages.append({"role": "assistant", "content": full_response})
+        st.session_state.NoOfFollowups -= 1
+
         if st.session_state.NoOfFollowups == 0:
             with st.chat_message(message["assistant"]):
                 st.markdown(message[Thankyou_message])
                 st.session_state.messages.append({"role": "assistant", "content": Thankyou_message})
-
