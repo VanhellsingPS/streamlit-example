@@ -50,7 +50,7 @@ if st.session_state.NoOfFollowups > -1:
                 st.session_state.NoOfFollowups -= 5
                 st.markdown(Thankyou_message)
                 st.session_state.messages.append({"role": "assistant", "content": Thankyou_message})
-                
+                st.experimental_rerun()
                    
         if st.session_state.NoOfFollowups > 0:
             with st.chat_message("assistant"):
