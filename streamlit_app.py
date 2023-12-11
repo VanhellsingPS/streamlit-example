@@ -54,8 +54,7 @@ if st.session_state.NoOfFollowups > -1:
                     model=st.session_state["openai_model"],
                     messages=[
                         {"role": "system", "content": system_prompt},
-                        {"role": m["role"], "content": m["content"]}
-                        for m in st.session_state.messages
+                        {"role": m["role"], "content": m["content"]} for m in st.session_state.messages
                     ],
                     stream=True,
                 ):
