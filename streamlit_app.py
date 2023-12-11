@@ -27,6 +27,7 @@ Thankyou_message = "Thank you for answering the follow-up Questions"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+    st.session_state.messages.append({"role": "system", "content": system_prompt})
     st.session_state.messages.append({"role": "assistant", "content": initial_question})
 
 for message in st.session_state.messages:
@@ -52,10 +53,7 @@ if st.session_state.NoOfFollowups > -1:
                 full_response = ""
                 for response in client.chat.completions.create(
                     model=st.session_state["openai_model"],
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": m["role"], "content": m["content"]}
-                        for m in st.session_state.messages ],
+                    messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages],
                     stream=True,
                 ):
                     full_response += (response.choices[0].delta.content or "")
