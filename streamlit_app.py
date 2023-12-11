@@ -31,7 +31,7 @@ if "messages" not in st.session_state:
     st.session_state.messages.append({"role": "assistant", "content": initial_question})
 
 for message in st.session_state.messages:
-    if message["role"] != "system":
+    if "role"!= "system":
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
